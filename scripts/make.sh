@@ -1,7 +1,7 @@
 #!/bin/sh
 
 SRCTXT=mozcdic-ut-alt-cannadic.txt
-USERDIC=user_dic-ut-alt-cannadic.txt
+USERDIC=user_dic-ut-alt-cannadic
 
 tar xf ../$SRCTXT.tar.bz2
 
