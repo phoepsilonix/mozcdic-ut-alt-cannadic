@@ -6,10 +6,9 @@
 
 require 'nkf'
 
-`wget -nc https://ja.osdn.net/dl/alt-cannadic/alt-cannadic-110208.tar.bz2`
-`rm -rf alt-cannadic-110208`
-`tar xf alt-cannadic-110208.tar.bz2`
-`cat alt-cannadic-110208/gcanna.ctd alt-cannadic-110208/g_fname.ctd > mozcdic-ut-alt-cannadic.txt`
+`wget https://github.com/takayuki/natume/raw/master/alt-cannadic-110208/gcanna.ctd`
+`wget https://github.com/takayuki/natume/raw/master/alt-cannadic-110208/g_fname.ctd`
+`cat gcanna.ctd g_fname.ctd > mozcdic-ut-alt-cannadic.txt`
 
 filename = "mozcdic-ut-alt-cannadic.txt"
 dicname = filename
