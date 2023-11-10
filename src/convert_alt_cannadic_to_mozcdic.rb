@@ -6,30 +6,25 @@
 
 require 'nkf'
 
-`wget https://github.com/takayuki/natume/raw/master/alt-cannadic-110208/gcanna.ctd`
-`wget https://github.com/takayuki/natume/raw/master/alt-cannadic-110208/g_fname.ctd`
-`cat gcanna.ctd g_fname.ctd > mozcdic-ut-alt-cannadic.txt`
-
-filename = "mozcdic-ut-alt-cannadic.txt"
-dicname = filename
-
-file = File.new(filename, "r")
+def convert(filename, code)
+  dicname = "mozcdic-ut-alt-cannadic.txt"
+  file = File.new(filename, "r")
 	lines = file.read
-file.close
+  file.close
 
-# EUC-JP から UTF-8 に変換し、全角英数は半角にする
-lines = NKF.nkf('-JE -jw -Z', lines)
-lines = lines.split("\n")
+  # EUC-JP から UTF-8 に変換し、全角英数は半角にする
+  lines = NKF.nkf('-JE -jw -Z', lines)
+  lines = lines.split("\n")
 
-# 確認用に出力
-dicfile = File.new("alt-cannadic.txt.utf8", "w")
+  # 確認用に出力
+  dicfile = File.new("alt-cannadic.txt.utf8", "w")
 	dicfile.puts lines
-dicfile.close
+  dicfile.close
 
-l2 = []
-p = 0
+  l2 = []
+  p = 0
 
-lines.length.times do |i|
+  lines.length.times do |i|
 	s1 = lines[i].chomp.split(" ")
 
 	# あきびん #T35*202 空き瓶 空瓶 #T35*151 空きビン 空ビン
@@ -83,18 +78,18 @@ lines.length.times do |i|
 			p = p + 1
 		end
 	end
-end
+  end
 
-lines = l2
-l2 = []
-lines = lines.sort
+  lines = l2
+  l2 = []
+  lines = lines.sort
 
-# Mozc の一般名詞のID
-id_mozc = "1847"
+  # Mozc の一般名詞のID
+  id_mozc = code
 
-p = 0
+  p = 0
 
-lines.length.times do |i|
+  lines.length.times do |i|
 	s1 = lines[i].chomp.split(" ")
 	s2 = lines[i - 1].chomp.split(" ")
 
@@ -107,13 +102,21 @@ lines.length.times do |i|
 	l2[p] = [s1[0], id_mozc, id_mozc, s1[2], s1[1]]
 	l2[p] = l2[p].join("	")
 	p = p + 1
+  end
+
+  lines = l2
+  l2 = []
+
+  lines = lines.sort
+
+  dicfile = File.new(dicname, "a")
+	dicfile.puts lines
+  dicfile.close
 end
 
-lines = l2
-l2 = []
+`wget https://github.com/takayuki/natume/raw/master/alt-cannadic-110208/gcanna.ctd`
+`wget https://github.com/takayuki/natume/raw/master/alt-cannadic-110208/g_fname.ctd`
 
-lines = lines.sort
-
-dicfile = File.new(dicname, "w")
-	dicfile.puts lines
-dicfile.close
+convert("gcanna.ctd", "1847")
+convert("g_fname.ctd", "1917")
+`rm alt-cannadic.txt.utf8`
