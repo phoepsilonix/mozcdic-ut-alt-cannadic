@@ -3,19 +3,19 @@
 
 # Author: UTUMI Hirosi (utuhiro78 at yahoo dot co dot jp)
 # License: Apache License, Version 2.0
+# Modified: Masato TOYOSHIMA (phoepsilonix at phoepsilonix dot love)
 
 import re
-import tarfile
+import codecs
 import urllib.request
 from unicodedata import normalize
 
-urllib.request.urlretrieve('https://ftp.iij.ad.jp/pub/osdn.jp/alt-cannadic/50881/alt-cannadic-110208.tar.bz2', 'alt-cannadic-110208.tar.bz2')
-
-with tarfile.open("alt-cannadic-110208.tar.bz2") as tar:
-    file = tar.extractfile("alt-cannadic-110208/gcanna.ctd")
-    lines = file.read().decode("euc_jp")
-    file = tar.extractfile("alt-cannadic-110208/g_fname.ctd")
-    lines = lines + file.read().decode("euc_jp")
+urllib.request.urlretrieve('https://github.com/takayuki/natume/raw/refs/heads/master/alt-cannadic-110208/g_fname.ctd', 'g_fname.ctd')
+urllib.request.urlretrieve('https://github.com/takayuki/natume/raw/refs/heads/master/alt-cannadic-110208/gcanna.ctd', 'gcanna.ctd')
+file = codecs.open("gcanna.ctd", 'r', 'euc-jp')
+lines = file.read()
+file = codecs.open("g_fname.ctd", 'r', 'euc-jp')
+lines = lines + file.read()
 
 lines = lines.splitlines()
 
