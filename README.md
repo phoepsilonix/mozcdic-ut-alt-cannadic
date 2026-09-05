@@ -1,6 +1,6 @@
 ## Overview
 
-A dictionary converted from [alt-cannadic](https://ja.osdn.net/projects/alt-cannadic/wiki/FrontPage) for Mozc.
+A dictionary converted from [alt-cannadic](https://ftp.iij.ad.jp/pub/sourceforge.jp/alt-cannadic/50881/) for Mozc.
 
 Thanks to the alt-cannadic team.
 
